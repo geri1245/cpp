@@ -1,103 +1,77 @@
 #include <iostream>
-#include <list>
-#include <functional>
-#include "partvec.h"
-#include <string>
-#include "partvec.h"
 
-struct short_enough: std::unary_function<std::string, bool>
-{
-  bool operator()( const std::string& a ) const
-  {
-    return a.length() < 4;
-  }
-};
+#include "track.hpp"
+#include "track.hpp"
 
-struct is_even: std::unary_function<int, bool>
-{
-  bool operator()( int i ) const
-  {
-    return 0 == i % 2;
-  }
-};
-
-const unsigned int max = 1000u;
+bool deq(const double a, const double b) //Equality check for double precision floating point values
+{                                        //Not part of the exercise, it's just for correctness testing
+    return std::abs(a - b) < 0.1;
+}
 
 int main()
 {
-  int your_mark = 1;
-  /* 2-es
-  partitioned_vector<unsigned int, is_even> pa;
-  for( unsigned int i = 0u; i < max; ++i )
-  {
-    pa.insert( i );
-  }
+    int mark = 1;
+    /* 
+    //Straight, RightTurn, LeftTurn, RaceCar, car.complete
+    Straight s1{500}; //{length of the straight road}
+    RightTurn rt1{100, 65}; //{length of the turn, degree of the turn}
 
-  partitioned_vector<std::string, short_enough> ps;
-  ps.insert( "C" );
-  ps.insert( "Cobol" );
-  ps.insert( "C++" );
-  const partitioned_vector<std::string, short_enough> cps = ps;
+    RaceCar car{120};
+    const double s_time = car.complete(s1);   // Time = road length / speed
+    const double rt_time = car.complete(rt1); // Time = ((90 - degree) / 90) * turn length / speed
+    
+    if( deq(4.17, s_time) &&
+        deq(rt_time, 0.23))
+    {
+        mark = 2;
+    }
+    */
+   /* 
+   //RaceTrack, Straight + RightTurn, RaceCar.complete(RaceTrack)
+    Road * s2 = new Straight(600);
+    Road * rt2 = new RightTurn(150, 45);
 
-  if ( 3u == cps.size() &&
-       max / 2 + 1 == pa[ 3 * max / 4 ] &&
-       "Cobol" == cps[ 2 ] &&
-       8u == pa[ 4 ] &&
-       max == pa.size() )
-  {
-    your_mark = pa[ 1 ];
-  }
-  */
-  /* 3-as
-  partitioned_vector<std::string, short_enough> pss;
-  pss.insert( "Java" );
-  pss.insert( "Javascript" );
-  pss.insert( "PHP" );
+    RaceTrack track = (s1 + rt1);
+    const double t_time = car.complete(track);
 
-  pss.swap( ps );
+    delete s2;
+    delete rt2;
 
-  if ( "PHP" == ps.front() &&
-       "C" == cps.front() &&
-       "Cobol" == cps.back() &&
-       "Cobol" == pss.back() )
-  {
-    your_mark = cps[ 1 ].size();
-  }
-  */
-  /* 4-es
-  partitioned_vector<unsigned int> v;
-  for( unsigned int i = 0u; i < 2 * max; ++i )
-  {
-    v.insert( i );
-  }
-  v.swap( pa );
+    const double rtt_time = car.complete(track);
 
-  if ( v.size() == max &&
-       pa.size() == 2 * max &&
-       8u == v[ 4 ] &&
-       3u == pa[ max + 1 ] )
-  {
-    your_mark = v[ 2 ];
-  }
-  */
-  /* 5-os
-  partitioned_vector<bool> d;
-  d.insert( true );
+    if(deq(t_time, 4.4) && deq(rtt_time, 4.4))
+    {
+        mark = 3;
+    }
+    */
+   /*
+   //RaceTrack.operator+=
+    track += new LeftTurn(200, 60);
+    RaceTrack track2 = track;
+    track += new Straight{650};
 
-  std::list<unsigned int> c;
-  c.push_back( 3u );
-  c.push_back( 8u );
-  c.push_back( 19u );
-  partitioned_vector<unsigned int, is_even> pl( c.begin(), c.end() );
+    const double t1_time = car.complete(track);
+    const double t2_time = car.complete(track2);
 
-  if ( d.front() &&
-       d[ 0 ] &&
-       8u == pl.front() &&
-       pl.size() == pl[ 1 ] )
-  {
-    your_mark += d.back();
-  }
-  */
-  std::cout << "Your mark is " << your_mark;
-  std::endl( std::cout );
+    if(deq(t1_time, 10.37) && deq(t2_time, 4.95))
+    {
+        mark = 4;
+    }
+    */
+    //This is (hopefully) way harder than what you would have to do in the test
+    /* RaceTrack.operator+, RaceTrack.operator-=
+    RaceTrack combined_track = track + track2;
+    combined_track -= Straight{500};     //This is in track, should be removed
+    combined_track -= LeftTurn{400, 25}; //This is not present in combined_track, nothing to remove
+
+    double final_time = car.complete(combined_track);
+
+    if(deq(final_time, 11.16))
+    {
+        mark = 5;
+    }
+    */
+    std::cout << "Your mark is " << mark << ".\n";
+
+    return 0;
 }
