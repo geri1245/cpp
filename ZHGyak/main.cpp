@@ -11,7 +11,7 @@ bool deq(const double a, const double b) //Equality check for double precision f
 int main()
 {
     int mark = 1;
-    /* 
+
     //Straight, RightTurn, LeftTurn, RaceCar, car.complete
     Straight s1{500}; //{length of the straight road}
     RightTurn rt1{100, 65}; //{length of the turn, degree of the turn}
@@ -25,9 +25,9 @@ int main()
     {
         mark = 2;
     }
-    */
-   /* 
+
    //RaceTrack, Straight + RightTurn, RaceCar.complete(RaceTrack)
+    
     Road * s2 = new Straight(600);
     Road * rt2 = new RightTurn(150, 45);
 
@@ -43,8 +43,7 @@ int main()
     {
         mark = 3;
     }
-    */
-   /*
+
    //RaceTrack.operator+=
     track += new LeftTurn(200, 60);
     RaceTrack track2 = track;
@@ -57,20 +56,21 @@ int main()
     {
         mark = 4;
     }
-    */
+
     //This is (hopefully) way harder than what you would have to do in the test
-    /* RaceTrack.operator+, RaceTrack.operator-=
-    RaceTrack combined_track = track + track2;
-    combined_track -= Straight{500};     //This is in track, should be removed
-    combined_track -= LeftTurn{400, 25}; //This is not present in combined_track, nothing to remove
+    //RaceTrack.operator+, RaceTrack.operator-=
+    
+    RaceTrack combined_track = track;
+    combined_track -= Straight{500};      //This is in track, should be removed
+    combined_track -= LeftTurn{400, 25};  //This is not present in combined_track, nothing to remove
 
     double final_time = car.complete(combined_track);
 
-    if(deq(final_time, 11.16))
+    if( deq(final_time, 10.37 - 4.17) )
     {
         mark = 5;
     }
-    */
+
     std::cout << "Your mark is " << mark << ".\n";
 
     return 0;
