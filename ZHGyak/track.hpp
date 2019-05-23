@@ -66,6 +66,10 @@ private:
     double angle;
 };
 
+//dynamic_cast is used to cast pointers of class types in class hierarchies. If succeeds, 
+//returns the pointer of type desired_type, if fails, returns nullptr. 
+//dynamic_cast<pointer_of_desired_type>(pointer_of_actual_object)
+
 template <class T>
 struct UnaryPred{
     UnaryPred(const T & member_) : member{member_} {}
@@ -151,6 +155,8 @@ private:
     std::vector<Road*> track;
 };
 
+//Templates would be a more elegant solution, but vector.erase wants to use this
+//operator if it is templated
 RaceTrack operator+(const Straight& a, const RightTurn & b)
 {
     std::vector<Road*> v;
